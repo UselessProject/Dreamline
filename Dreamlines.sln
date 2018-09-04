@@ -1,0 +1,22 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C1E219B1-AB01-493B-8294-7ED8814FDC16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dreamlines.Web", "src\Dreamlines.Web\Dreamlines.Web.csproj", "{1331F274-B803-42A8-A877-0995AA1FE32E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1331F274-B803-42A8-A877-0995AA1FE32E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1331F274-B803-42A8-A877-0995AA1FE32E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1331F274-B803-42A8-A877-0995AA1FE32E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1331F274-B803-42A8-A877-0995AA1FE32E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1331F274-B803-42A8-A877-0995AA1FE32E} = {C1E219B1-AB01-493B-8294-7ED8814FDC16}
+	EndGlobalSection
+EndGlobal
