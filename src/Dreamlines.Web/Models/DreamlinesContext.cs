@@ -12,6 +12,7 @@ namespace Dreamlines.Web.Models {
         public DbSet<Country> Countries { get; set; }
         public DbSet<SalesUnit> SalesUnits { get; set; }
         public DbSet<Ship> Ships { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             base.OnModelCreating(modelBuilder);
