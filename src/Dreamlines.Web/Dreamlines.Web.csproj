@@ -2,70 +2,56 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <IsPackable>false</IsPackable>
+    <SpaRoot>ClientApp\</SpaRoot>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+
+    <!-- Set this to true if you enable server-side prerendering -->
+    <BuildServerSideRenderer>false</BuildServerSideRenderer>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.1.1" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.3" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\Configurations\" />
+    <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Content Remove="$(SpaRoot)**" />
+    <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
+
   <ItemGroup>
-    <Content Remove="wwwroot\css\site.css" />
-    <Content Remove="wwwroot\lib\bootstrap\.bower.json" />
-    <Content Remove="wwwroot\lib\bootstrap\LICENSE" />
-    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-theme.css" />
-    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-theme.css.map" />
-    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-theme.min.css" />
-    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-theme.min.css.map" />
-    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.css" />
-    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
-    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css" />
-    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" />
-    <Content Remove="wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.eot" />
-    <Content Remove="wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.svg" />
-    <Content Remove="wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Remove="wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.woff" />
-    <Content Remove="wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
-    <Content Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
-    <Content Remove="wwwroot\lib\bootstrap\dist\js\npm.js" />
-    <Content Remove="wwwroot\lib\jquery\.bower.json" />
-    <Content Remove="wwwroot\lib\jquery\dist\jquery.js" />
-    <Content Remove="wwwroot\lib\jquery\dist\jquery.min.js" />
-    <Content Remove="wwwroot\lib\jquery\dist\jquery.min.map" />
-    <Content Remove="Views\Home\About.cshtml" />
+    <ProjectReference Include="..\Dreamlines.Core\Dreamlines.Core.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="Migrations\AddCountryTable.cs" />
-    <Compile Remove="Migrations\AddCurrencyTable.cs" />
-    <Compile Remove="Migrations\AddSalesUnitTable.cs" />
-    <Compile Remove="Migrations\20180904074528_InitialCreate.Designer.cs" />
-    <Compile Remove="Migrations\20180904074528_InitialCreate.cs" />
-    <Compile Remove="Migrations\DreamlinesContextModelSnapshot.cs" />
-    <Compile Remove="Migrations\20180904121936_InitialCreate.cs" />
-    <Compile Remove="Migrations\20180904121936_InitialCreate.Designer.cs" />
-    <Compile Remove="Migrations\20180904125015_InitialCreate.cs" />
-    <Compile Remove="Migrations\20180904125015_InitialCreate.Designer.cs" />
-    <Compile Remove="Migrations\DreamlinesContextModelSnapshot.cs" />
-    <Compile Remove="Migrations\20180904145800_InitialCreate.cs" />
-    <Compile Remove="Migrations\20180904145800_InitialCreate.Designer.cs" />
-    <Compile Remove="Migrations\DreamlinesContextModelSnapshot.cs" />
-    <Compile Remove="Migrations\20180904150616_InitialCreate.cs" />
-    <Compile Remove="Migrations\20180904150616_InitialCreate.Designer.cs" />
-    <Compile Remove="Migrations\DreamlinesContextModelSnapshot.cs" />
-    <Compile Remove="Migrations\20180904151550_InitialCreate.cs" />
-    <Compile Remove="Migrations\20180904151550_InitialCreate.Designer.cs" />
-    <Compile Remove="Migrations\DreamlinesContextModelSnapshot.cs" />
-    <Compile Remove="Migrations\20180904151836_InitialCreate.cs" />
-    <Compile Remove="Migrations\20180904151836_InitialCreate.Designer.cs" />
-    <Compile Remove="Migrations\DreamlinesContextModelSnapshot.cs" />
-    <Compile Remove="Migrations\20180904170849_InitialCreate.cs" />
-    <Compile Remove="Migrations\20180904170849_InitialCreate.Designer.cs" />
-    <Compile Remove="Migrations\DreamlinesContextModelSnapshot.cs" />
-  </ItemGroup>
+  <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
+    <!-- Ensure Node.js is installed -->
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+  </Target>
+
+  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
+
+    <!-- Include the newly-built files in the publish output -->
+    <ItemGroup>
+      <DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
+      <DistFiles Include="$(SpaRoot)node_modules\**" Condition="'$(BuildServerSideRenderer)' == 'true'" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+
 </Project>
