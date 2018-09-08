@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Linq;
 
-namespace Dreamlines.Web.Models.Configurations {
+namespace Dreamlines.Models.Configurations {
 
     public class CurrencyTypeConfiguration : IEntityTypeConfiguration<Currency> {
 

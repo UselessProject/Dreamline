@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Dreamlines.Web.Models {
+namespace Dreamlines.Models {
 
     public class Booking : IModel {
         public int Id { get; set; }

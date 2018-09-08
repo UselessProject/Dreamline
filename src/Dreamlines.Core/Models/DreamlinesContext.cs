@@ -1,7 +1,7 @@
-﻿using Dreamlines.Web.Models.Configurations;
+﻿using Dreamlines.Models.Configurations;
 using Microsoft.EntityFrameworkCore;
 
-namespace Dreamlines.Web.Models {
+namespace Dreamlines.Models {
 
     public class DreamlinesContext : DbContext {
 

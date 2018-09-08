@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Dreamlines.Web.Models {
+namespace Dreamlines.Models {
 
     public class Ship : IModel {
         public int Id { get; set; }

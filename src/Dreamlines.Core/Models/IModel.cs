@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Dreamlines.Web.Models {
+namespace Dreamlines.Models {
 
     public interface IModel {
         int Id { get; set; }

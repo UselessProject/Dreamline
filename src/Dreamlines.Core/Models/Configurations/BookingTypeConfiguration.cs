@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Dreamlines.Web.Models.Configurations {
+namespace Dreamlines.Models.Configurations {
 
     public class BookingTypeConfiguration : IEntityTypeConfiguration<Booking> {
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Dreamlines.Web.Models.Configurations {
+namespace Dreamlines.Models.Configurations {
 
     public class SalesUnitTypeConfiguration : IEntityTypeConfiguration<SalesUnit> {
 
@@ -9,19 +9,23 @@ namespace Dreamlines.Web.Models.Configurations {
             builder.ToTable("sales_unit");
 
             builder.Property(e => e.Id)
-                   .HasColumnName("sales_unit_id");
+                .HasColumnName("sales_unit_id");
 
             builder.Property(e => e.CountryId)
-                   .HasColumnName("country_id")
-                   .IsRequired();
+                .HasColumnName("country_id")
+                .IsRequired();
+
+            builder.Property(e => e.Name)
+                .HasColumnName("name")
+                .IsRequired();
 
             builder.Property(e => e.CreatedOn)
-                   .HasColumnName("created_on")
-                   .IsRequired();
+                .HasColumnName("created_on")
+                .IsRequired();
 
             builder.HasOne(e => e.Country)
-                   .WithMany(e => e.SalesUnits)
-                   .IsRequired();
+                .WithMany(e => e.SalesUnits)
+                .IsRequired();
         }
 
     }
