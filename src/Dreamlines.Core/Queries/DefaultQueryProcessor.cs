@@ -2,13 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Dreamlines.Dtos;
+using Dreamlines.Models;
 using Dreamlines.Utils;
 
 namespace Dreamlines.Data {
     
-    public class DefaultQueryProcess: IQueryProcessor {
+    public class DefaultQueryProcessor: IQueryProcessor {
 
         private readonly Dictionary<Type, Type> _handlers = new Dictionary<Type, Type>();
+
+        public DefaultQueryProcessor(DreamlinesContext dbContext) {
+            Context = dbContext;
+        }
+        
+        protected DreamlinesContext Context { get; }
 
         public virtual IQueryProcessor AddHandler<TQuery, THandler>() {            
             _handlers.Add(typeof(TQuery), typeof(THandler));
@@ -30,11 +38,12 @@ namespace Dreamlines.Data {
             );
             // creating a new instance of query handler and executing
             // the query asynchronously.
-            var handler = Activator.CreateInstance(handlerType) as IQueryHandler<TResult>;
+            // TODO: using service provider to resolve query handler dependencies.
+            var handler = Activator.CreateInstance(handlerType, Context) as IQueryHandler<TResult>;
             AssertArguments.IsTrue(
-                handler != null,
-                $"'{handlerType.Name}' is not a valid query handler type.",
-                "query"
+               handler != null,
+               $"'{handlerType.Name}' is not a valid query handler type.",
+               "query"
             );
             return await handler.ExecuteAsync(query);
         }

@@ -7,7 +7,6 @@ namespace Dreamlines.Models {
         public int Id { get; set; }
         public int SalesUnitId { get; set; }
         public string Name { get; set; }
-        public DateTime CreatedOn { get; set; }
         public SalesUnit SalesUnit { get; set; }
         public IEnumerable<Booking> Booking { get; set; }
     }

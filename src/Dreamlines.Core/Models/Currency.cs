@@ -8,7 +8,6 @@ namespace Dreamlines.Models {
         public string Name { get; set; }
         public string Symbol { get; set; }
         public IEnumerable<Country> Countries { get; set; }
-        public DateTime CreatedOn { get; set; }
     }
 
 }

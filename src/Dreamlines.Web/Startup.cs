@@ -1,3 +1,5 @@
+using Dreamlines.Data;
+using Dreamlines.Dtos;
 using Dreamlines.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -20,9 +22,19 @@ namespace Dreamlines.Web {
 
         public IConfiguration Configuration { get; }
 
+        public void ConfigureQueries(IQueryProcessor processor) {
+            processor
+                .AddHandler<SalesUnitQuery, SalesUnitQueryHandler>()
+                .AddHandler<BookingQuery, BookingQueryHandler>();
+        }
+
         public void ConfigureDbContext(DbContextOptionsBuilder options) {
-            options.UseMySql(Configuration.GetConnectionString(ConnectionStringName))
-                   .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            options
+                .UseMySql(
+                    Configuration.GetConnectionString(ConnectionStringName),
+                    builder => builder.MigrationsAssembly("Dreamlines.Web")
+                )
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -30,19 +42,25 @@ namespace Dreamlines.Web {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration => {
-                configuration.RootPath = "ClientApp/dist";
-            });
+            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });
 
             // registering the database context into the service container
             services.AddDbContext<DreamlinesContext>(ConfigureDbContext);
+
+            // initializing the query processor            
+            services.AddScoped<IQueryProcessor, DefaultQueryProcessor>(sp => {
+                var queryProcessor = new DefaultQueryProcessor(sp.GetService<DreamlinesContext>());
+                ConfigureQueries(queryProcessor);
+                return queryProcessor;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
-            } else {
+            }
+            else {
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }

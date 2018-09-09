@@ -21,8 +21,9 @@ namespace Dreamlines.Data {
                 group booking by new {unit.Id, unit.Name}
                 into g
                 select new SalesUnitSummary {
-                    Id = g.Key.Id,
-                    Name = g.Key.Name,
+                    SalesUnitId = g.Key.Id,
+                    SalesUnitName = g.Key.Name,
+                    TotalBooking = g.Count(),
                     TotalPrice = g.Sum(e => e.Price)
                 };
         }

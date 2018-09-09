@@ -1,4 +1,4 @@
-namespace Dreamlines.Data {
+namespace Dreamlines.Dtos {
     
     public interface IQuery<TResult> {}
     

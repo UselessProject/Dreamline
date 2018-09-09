@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Dreamlines.Data;
+using Dreamlines.Dtos;
 using FluentAssertions;
 using Xunit;
 

@@ -28,10 +28,6 @@ namespace Dreamlines.Models.Configurations {
                    .IsRequired()
                    .HasMaxLength(10);
 
-            builder.Property(e => e.CreatedOn)
-                   .HasColumnName("created_on")
-                   .IsRequired();
-
             builder.HasData(CreateSeedData().ToArray());
         }
 
@@ -39,36 +35,31 @@ namespace Dreamlines.Models.Configurations {
             yield return new Currency {
                 Id = 1,
                 Name = "Euro",
-                Symbol = "€",
-                CreatedOn = DateTime.UtcNow
+                Symbol = "€"
             };
 
             yield return new Currency {
                 Id = 2,
                 Name = "Brazilian real",
-                Symbol = "R$",
-                CreatedOn = DateTime.UtcNow
+                Symbol = "R$"
             };
 
             yield return new Currency {
                 Id = 3,
                 Name = "Australian dollar",
-                Symbol = "AU$",
-                CreatedOn = DateTime.UtcNow
+                Symbol = "AU$"
             };
 
             yield return new Currency {
                 Id = 4,
                 Name = "Russian ruble",
-                Symbol = "RUB",
-                CreatedOn = DateTime.UtcNow
+                Symbol = "RUB"
             };
 
             yield return new Currency {
                 Id = 5,
                 Name = "Renminbi",
-                Symbol = "¥",
-                CreatedOn = DateTime.UtcNow
+                Symbol = "¥"
             };
         }
 

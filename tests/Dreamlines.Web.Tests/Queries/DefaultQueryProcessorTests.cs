@@ -4,7 +4,7 @@ namespace Dreamlines.Web.Tests.Queries {
 
     public class DefaultQueryProcessorTests : BaseQueryProcessorTests {
 
-        protected override IQueryProcessor CreateProcessor() => new DefaultQueryProcess();
+        protected override IQueryProcessor CreateProcessor() => new DefaultQueryProcessor(null);
 
     }
 
