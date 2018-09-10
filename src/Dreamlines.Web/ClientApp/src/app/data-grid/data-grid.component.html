@@ -1,0 +1,12 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th *ngFor="let col of columns" [class]="col.className">{{col.header}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let row of dataSource | async">
+        <td *ngFor="let col of columns" [class]="col.className">{{row[col.name]}}</td>
+    </tr>
+    </tbody>
+</table>
