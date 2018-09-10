@@ -1,13 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from "rxjs";
-import { Column } from "../data-grid/data-grid.component";
-import { SalesUnitService, SalesUnitSummary } from "../../services/sales-unit";
-import { SalesUnitRecord } from "../app.component";
+import { Column, PaginatedResult } from "../data-grid/data-grid.component";
+import { SalesUnitService, SalesUnitSummary, SearchRequest } from "../../services/sales-unit";
+
+export interface SalesUnitRecord {
+    readonly id: number;
+    readonly unit: string;
+    readonly country: string;
+    readonly quantity: number;
+    readonly price: string;
+}
 
 @Component({
-  selector: 'app-sales-unit-report',
-  templateUrl: './sales-unit-report.component.html',
-  styleUrls: ['./sales-unit-report.component.scss']
+    selector: 'app-sales-unit-report',
+    templateUrl: './sales-unit-report.component.html',
+    styleUrls: ['./sales-unit-report.component.scss']
 })
 export class SalesUnitReportComponent implements OnInit {
 
@@ -15,7 +22,7 @@ export class SalesUnitReportComponent implements OnInit {
     private currencySeparator = "$&,";
 
     // filter properties
-    public isCollapsed = true;
+    public hideAdvanceSearch = true;
     public fromDate: Date = new Date(2016, 0, 1);
     public toDate: Date = new Date(2016, 2, 1);
     public totalResult: number = 0;
@@ -33,33 +40,39 @@ export class SalesUnitReportComponent implements OnInit {
     constructor(readonly salesUnitService: SalesUnitService) {
     }
 
-    ngOnInit(): void {
+    ngOnInit() {
         this.search();
     }
 
     search() {
-        this.salesUnitService.search({
+        const searchRequest: SearchRequest = {
             skip: 0,
             limit: 100,
             fromDate: this.fromDate,
             toDate: this.toDate
-        }).subscribe(data => {
-            this.dataSource$.next(data.result.map(this.mapSummaryRecords.bind(this)));
-            this.totalResult = data.total;
-        });
-    }
-
-    mapSummaryRecords(summary: SalesUnitSummary): SalesUnitRecord {
-        return {
-            id: summary.salesUnitId,
-            unit: summary.salesUnitName,
-            country: summary.countryName,
-            quantity: summary.totalBooking,
-            price: `${summary.currencySymbol} ${this.formatCurrency(summary.totalPrice)}`
         };
+        
+        this.salesUnitService
+            .search(searchRequest)
+            .subscribe(this.onDataReceived.bind(this));
+    }
+    
+    private onDataReceived(data: PaginatedResult<SalesUnitSummary>) {
+        this.dataSource$.next(
+            data.result.map(this.mapSummaryRecords.bind(this))
+        );
+        this.totalResult = data.total;
     }
 
-    formatCurrency = (value: number) =>
+    private mapSummaryRecords = (summary: SalesUnitSummary): SalesUnitRecord => ({
+        id: summary.salesUnitId,
+        unit: summary.salesUnitName,
+        country: summary.countryName,
+        quantity: summary.totalBooking,
+        price: `${summary.currencySymbol} ${this.formatCurrency(summary.totalPrice)}`
+    });
+
+    private formatCurrency = (value: number) =>
         value.toFixed(3).replace(this.currencySeparatorRegex, this.currencySeparator);
 
 }
