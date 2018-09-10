@@ -1,0 +1,53 @@
+<h3>Search from
+  <small class="text-muted">{{fromDate.toDateString() | date: 'MM-dd-yyyy'}}</small>
+  to
+  <small class="text-muted">{{toDate.toDateString() | date: 'MM-dd-yyyy'}}</small>
+</h3>
+<div class="clearfix"></div>
+<hr>
+<button type="button" class="btn btn-outline-success float-right" (click)="isCollapsed = !isCollapsed">
+  Advance Search
+</button>
+<div class="clearfix"></div>
+<div [collapse]="isCollapsed" class="card mt-3">
+  <div class="card-header">
+    Advance Search
+  </div>
+  <div class="card-body">
+    <form>
+      <div class="form-group">
+        <label for="fromDateInput">From Date</label>
+        <input id="fromDateInput"
+               name="fromDate"
+               type="text"
+               placeholder="Select a start date..."
+               class="form-control"
+               bsDatepicker
+               [(ngModel)]="fromDate"
+               (ngModelChange)="search()">
+        <small id="emailHelp" class="form-text text-muted">You can select from date picker or type a date
+          manually, e.g. 09/01/2018
+        </small>
+      </div>
+      <div class="form-group">
+        <label for="toDateInput">To Date</label>
+        <input id="toDateInput"
+               name="toDate"
+               type="text"
+               placeholder="Select an end date..."
+               class="form-control"
+               [(ngModel)]="toDate"
+               (ngModelChange)="search()"
+               bsDatepicker>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="card mt-3 mb-5">
+  <div class="card-header">
+    Search Result ({{totalResult}})
+  </div>
+  <div class="card-body">
+    <app-data-grid [columns]="gridColumns" [dataSource]="dataSource$"></app-data-grid>
+  </div>
+</div>
