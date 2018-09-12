@@ -1,12 +1,14 @@
-<table class="table">
+<table class="table table-hover">
     <thead>
     <tr>
         <th *ngFor="let col of columns" [class]="col.className">{{col.header}}</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let row of dataSource | async">
-        <td *ngFor="let col of columns" [class]="col.className">{{row[col.name]}}</td>
+    <tr *ngFor="let row of dataSource | async" (click)="onRowClick(row)">
+        <td *ngFor="let col of columns" [class]="col.className">
+            {{row[col.name]}}
+        </td>
     </tr>
     </tbody>
 </table>

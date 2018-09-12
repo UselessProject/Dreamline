@@ -39,7 +39,7 @@ namespace Dreamlines.Web.Tests.Queries {
         public void ProcessAsyncShouldThrowErrorWhenQueryHandlerIsNotValidQueryHandler() {
             // arrange
             var processor = CreateProcessor()
-                .AddHandler<DummyQuery, InvalidQueryHandler>();
+                .MapHandler<DummyQuery, InvalidQueryHandler>();
 
             Func<Task<int>> action = () => processor.ProcessAsync(new DummyQuery());
 
@@ -55,7 +55,7 @@ namespace Dreamlines.Web.Tests.Queries {
         public async Task ProcessAsyncShouldReturnTheSum(int left, int right) {
             // arrange
             var processor = CreateProcessor()
-                .AddHandler<SumQuery, SumQueryHandler>();
+                .MapHandler<SumQuery, SumQueryHandler>();
 
             // act
             var result = await processor.ProcessAsync(new SumQuery {

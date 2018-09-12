@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from "rxjs";
 
 export interface PaginatedResult<T = any> {
@@ -12,6 +12,7 @@ export interface Column {
     readonly name: string;
     readonly header: string;
     readonly className?: string;
+    readonly href?: string;
 }
 
 @Component({
@@ -23,5 +24,10 @@ export class DataGridComponent{
 
     @Input() columns: Column[];
     @Input() dataSource: Observable<PaginatedResult>;
+    @Output() rowClick: EventEmitter<any> = new EventEmitter();
+    
+    onRowClick(record: any) {
+        this.rowClick.emit(record);
+    }
 
 }

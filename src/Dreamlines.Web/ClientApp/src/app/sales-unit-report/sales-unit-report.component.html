@@ -48,6 +48,8 @@
     Search Result ({{totalResult}})
   </div>
   <div class="card-body">
-    <app-data-grid [columns]="gridColumns" [dataSource]="dataSource$"></app-data-grid>
+    <app-data-grid [columns]="gridColumns" 
+                   [dataSource]="dataSource$" 
+                   (rowClick)="onRowClick($event)"></app-data-grid>
   </div>
 </div>

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from "rxjs";
 import { Column, PaginatedResult } from "../data-grid/data-grid.component";
-import { SalesUnitService, SalesUnitSummary, SearchRequest } from "../../services/sales-unit";
+import { SalesUnitService, SalesUnitSummary, SearchRequest } from "../../services/sales-unit-service";
+import { Router } from "@angular/router";
 
 export interface SalesUnitRecord {
     readonly id: number;
@@ -37,7 +38,10 @@ export class SalesUnitReportComponent implements OnInit {
         {name: 'price', header: 'Price', className: 'text-truncate'}
     ];
 
-    constructor(readonly salesUnitService: SalesUnitService) {
+    constructor(private readonly salesUnitService: SalesUnitService,
+                private readonly router: Router) {
+        this.onDataReceived = this.onDataReceived.bind(this);
+        this.mapSummaryRecords = this.mapSummaryRecords.bind(this);
     }
 
     ngOnInit() {
@@ -51,17 +55,29 @@ export class SalesUnitReportComponent implements OnInit {
             fromDate: this.fromDate,
             toDate: this.toDate
         };
-        
+
         this.salesUnitService
             .search(searchRequest)
-            .subscribe(this.onDataReceived.bind(this));
+            .subscribe(this.onDataReceived);
     }
-    
+
     private onDataReceived(data: PaginatedResult<SalesUnitSummary>) {
         this.dataSource$.next(
-            data.result.map(this.mapSummaryRecords.bind(this))
+            data.result.map(this.mapSummaryRecords)
         );
         this.totalResult = data.total;
+    }
+
+    onRowClick(record: SalesUnitRecord) {
+        this.router.navigate(
+            ["booking", record.id],
+            {
+                queryParams: {
+                    start: this.toIsoDate(this.fromDate),
+                    end: this.toIsoDate(this.toDate)
+                }
+            }
+        );
     }
 
     private mapSummaryRecords = (summary: SalesUnitSummary): SalesUnitRecord => ({
@@ -75,4 +91,9 @@ export class SalesUnitReportComponent implements OnInit {
     private formatCurrency = (value: number) =>
         value.toFixed(3).replace(this.currencySeparatorRegex, this.currencySeparator);
 
+    private toIsoDate = (date: Date) => 
+        `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+
 }
+
+

@@ -22,12 +22,6 @@ namespace Dreamlines.Web {
 
         public IConfiguration Configuration { get; }
 
-        public void ConfigureQueries(IQueryProcessor processor) {
-            processor
-                .AddHandler<SalesUnitQuery, SalesUnitQueryHandler>()
-                .AddHandler<BookingQuery, BookingQueryHandler>();
-        }
-
         public void ConfigureDbContext(DbContextOptionsBuilder options) {
             options
                 .UseMySql(
@@ -48,11 +42,10 @@ namespace Dreamlines.Web {
             services.AddDbContext<DreamlinesContext>(ConfigureDbContext);
 
             // initializing the query processor            
-            services.AddScoped<IQueryProcessor, DefaultQueryProcessor>(sp => {
-                var queryProcessor = new DefaultQueryProcessor(sp.GetService<DreamlinesContext>());
-                ConfigureQueries(queryProcessor);
-                return queryProcessor;
-            });
+            services
+                .AddScoped<IQueryProcessor, DefaultQueryProcessor>()
+                .AddQuery<SalesUnitQuery, PaginatedResult<SalesUnitSummary>, SalesUnitQueryHandler>()
+                .AddQuery<BookingQuery, PaginatedResult<BookingSummary>, BookingQueryHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
