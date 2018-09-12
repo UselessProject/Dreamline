@@ -9,7 +9,7 @@ export interface SearchRequest {
     readonly limit: number;
 }
 
-export interface SalesUnitSummary {
+export interface BookingSummary {
     readonly bookingId: number;
     readonly shipId: string;
     readonly shipName: string;
@@ -23,7 +23,7 @@ export class BookingService {
     constructor(readonly http: HttpClient) {}
 
     search(request: SearchRequest) {
-        return this.http.post<PaginatedResult<SalesUnitSummary>>(
+        return this.http.post<PaginatedResult<BookingSummary>>(
             "/api/booking/search", request);
     }
 
