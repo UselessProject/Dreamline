@@ -4,17 +4,19 @@ using Dreamlines.Data;
 using Dreamlines.Dtos;
 using FluentAssertions;
 using Xunit;
+using Moq;
 
 namespace Dreamlines.Web.Tests.Queries {
 
     public abstract class BaseQueryProcessorTests {
 
-        protected abstract IQueryProcessor CreateProcessor();
+        protected abstract IQueryProcessor CreateProcessor(IServiceProvider serviceProvider);
 
         [Fact]
         public void ProcessAsyncShouldThrowErrorWhenQueryIsNull() {
             // arrange
-            var processor = CreateProcessor();
+            var serviceProvider = new Mock<IServiceProvider>();
+            var processor = CreateProcessor(serviceProvider.Object);
             Func<Task<int>> action = () => processor.ProcessAsync<int>(null);
 
             // act & assert
@@ -26,7 +28,8 @@ namespace Dreamlines.Web.Tests.Queries {
         [Fact]
         public void ProcessAsyncShouldThrowErrorWhenQueryHandlerNotRegistered() {
             // arrange
-            var processor = CreateProcessor();
+            var serviceProvider = new Mock<IServiceProvider>();
+            var processor = CreateProcessor(serviceProvider.Object);
             Func<Task<int>> action = () => processor.ProcessAsync(new DummyQuery());
 
             // act & assert
@@ -38,8 +41,12 @@ namespace Dreamlines.Web.Tests.Queries {
         [Fact]
         public void ProcessAsyncShouldThrowErrorWhenQueryHandlerIsNotValidQueryHandler() {
             // arrange
-            var processor = CreateProcessor()
-                .MapHandler<DummyQuery, InvalidQueryHandler>();
+            var serviceProvider = new Mock<IServiceProvider>();
+            serviceProvider
+                .Setup(s => s.GetService(typeof(IQueryHandler<DummyQuery, int>)))
+                .Returns(null);
+            
+            var processor = CreateProcessor(serviceProvider.Object);
 
             Func<Task<int>> action = () => processor.ProcessAsync(new DummyQuery());
 
@@ -54,8 +61,12 @@ namespace Dreamlines.Web.Tests.Queries {
         [InlineData(5, 3)]
         public async Task ProcessAsyncShouldReturnTheSum(int left, int right) {
             // arrange
-            var processor = CreateProcessor()
-                .MapHandler<SumQuery, SumQueryHandler>();
+            var serviceProvider = new Mock<IServiceProvider>();
+            serviceProvider
+                .Setup(s => s.GetService(typeof(IQueryHandler<SumQuery, int>)))
+                .Returns(new SumQueryHandler());
+            
+            var processor = CreateProcessor(serviceProvider.Object);
 
             // act
             var result = await processor.ProcessAsync(new SumQuery {
