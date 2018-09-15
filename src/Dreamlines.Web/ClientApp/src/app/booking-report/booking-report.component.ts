@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { SalesUnitService, SalesUnitSummary } from "../../services/sales-unit-service";
 import { Column, PaginatedResult } from "../data-grid/data-grid.component";
-import { formatNumber, toUSDateFormat } from "../../utils";
+import { formatNumber, toIsoDate, toUSDate as toUSDateFormat } from "../../utils";
 import { Subject } from "rxjs";
 import { BookingService, BookingSummary } from "../../services/booking-service";
 
@@ -33,7 +33,7 @@ export class BookingReportComponent implements OnInit {
         {name: 'price', header: 'Price'},
         {name: 'date', header: 'Date', className: 'd-none d-lg-table-cell'},
     ];
-    
+
     public fromDate: Date;
     public toDate: Date;
     public salesUnitName: string;
@@ -48,22 +48,22 @@ export class BookingReportComponent implements OnInit {
         this.toDate = new Date(queryParams.end);
 
         const salesUnitId = +params.id;
-        
+
         this.salesUnitService
             .search({
                 salesUnitId,
-                fromDate: this.fromDate,
-                toDate: this.toDate,
+                fromDate: toIsoDate(this.fromDate),
+                toDate: toIsoDate(this.toDate),
                 skip: 0,
                 limit: 100
             })
             .subscribe(this.onSalesUnitSummaryReceived.bind(this));
-        
+
         this.bookingService
             .search({
                 salesUnitId,
-                fromDate: this.fromDate,
-                toDate: this.toDate,
+                fromDate: toIsoDate(this.fromDate),
+                toDate: toIsoDate(this.toDate),
                 skip: 0,
                 limit: 100
             })
@@ -78,18 +78,15 @@ export class BookingReportComponent implements OnInit {
         this.totalPrice = formatNumber(first.totalPrice);
         this.currencySymbol = first.currencySymbol;
     }
-    
-    private onBookingSummaryReceived(data: PaginatedResult<BookingSummary>) {
-        this.dataSource$.next(data.result.map(this.mapSummaryRecord));
+
+    private onBookingSummaryReceived(summary: PaginatedResult<BookingSummary>) {
+        this.dataSource$.next(summary.result.map(e => ({
+            id: e.bookingId,
+            ship: e.shipName,
+            price: `${e.currencySymbol} ${formatNumber(e.price)}`,
+            date: toUSDateFormat(new Date(e.bookingDate))
+        })));
     }
     
-    private mapSummaryRecord(summary: BookingSummary): BookingRecord {
-        return {
-            id: summary.bookingId,
-            ship: summary.shipName,
-            price: `${summary.currencySymbol} ${formatNumber(summary.price)}`,
-            date: toUSDateFormat(new Date(summary.bookingDate))
-        };
-    }
 
 }

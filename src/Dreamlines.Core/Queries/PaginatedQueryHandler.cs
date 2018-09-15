@@ -1,17 +1,20 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Dreamlines.Dtos;
+using Dreamlines.Utils;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dreamlines.Data {
 
     public abstract class PaginatedQueryHandler<TQuery, TResult>
         : IQueryHandler<TQuery, PaginatedResult<TResult>>
-        where TQuery : IPaginatedQuery<TResult> {
+        where TQuery : class, IPaginatedQuery<TResult> {
 
         protected abstract IQueryable<TResult> ExecuteCore(TQuery query);
 
         public virtual async Task<PaginatedResult<TResult>> ExecuteAsync(TQuery query) {
+            AssertArguments.NotNull(query, nameof(query));
+            
             var unfilteredQuery = ExecuteCore(query);
             
             var filteredQuery = unfilteredQuery

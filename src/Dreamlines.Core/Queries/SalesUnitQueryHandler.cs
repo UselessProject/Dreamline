@@ -1,12 +1,14 @@
 using System.Linq;
 using Dreamlines.Dtos;
 using Dreamlines.Models;
+using Dreamlines.Utils;
 
 namespace Dreamlines.Data {
 
     public class SalesUnitQueryHandler : PaginatedQueryHandler<SalesUnitQuery, SalesUnitSummary> {
 
         public SalesUnitQueryHandler(DreamlinesContext context) {
+            AssertArguments.NotNull(context, nameof(context));
             Context = context;
         }
 

@@ -7,7 +7,7 @@ export const formatNumber = (value: number, fractionDigits = 3) =>
     value.toFixed(fractionDigits).replace(numberSeparatorRegex, numberSeparator);
 
 export const toIsoDate = (date: Date) =>
-    `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    moment(date).format("YYYY-MM-DD");
 
-export const toUSDateFormat = (date: Date) =>
+export const toUSDate = (date: Date) =>
     moment(date).format("MM/DD/YYYY");

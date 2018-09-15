@@ -19,10 +19,7 @@ export interface SalesUnitRecord {
     styleUrls: ['./sales-unit-report.component.scss']
 })
 export class SalesUnitReportComponent implements OnInit {
-
-    private currencySeparatorRegex = /\d(?=(\d{3})+\.)/g;
-    private currencySeparator = "$&,";
-
+    
     // filter properties
     public hideAdvanceSearch = true;
     public fromDate: Date = new Date(2016, 0, 1);
@@ -53,8 +50,8 @@ export class SalesUnitReportComponent implements OnInit {
         const searchRequest: SearchRequest = {
             skip: 0,
             limit: 100,
-            fromDate: this.fromDate,
-            toDate: this.toDate
+            fromDate: toIsoDate(this.fromDate),
+            toDate: toIsoDate(this.toDate)
         };
 
         this.salesUnitService

@@ -3,8 +3,8 @@ import { HttpClient } from "@angular/common/http";
 import { PaginatedResult } from "../app/data-grid/data-grid.component";
 
 export interface SearchRequest {
-    readonly fromDate: Date;
-    readonly toDate: Date;
+    readonly fromDate: string;
+    readonly toDate: string;
     readonly skip: number;
     readonly limit: number;
     readonly salesUnitId?: number;

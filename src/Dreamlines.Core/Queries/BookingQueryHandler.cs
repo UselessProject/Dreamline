@@ -1,6 +1,7 @@
 using System.Linq;
 using Dreamlines.Dtos;
 using Dreamlines.Models;
+using Dreamlines.Utils;
 
 namespace Dreamlines.Data {
 
@@ -8,6 +9,7 @@ namespace Dreamlines.Data {
         : PaginatedQueryHandler<BookingQuery, BookingSummary> {
 
         public BookingQueryHandler(DreamlinesContext dbContext) {
+            AssertArguments.NotNull(dbContext, nameof(dbContext));
             Context = dbContext;
         }
 
