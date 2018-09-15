@@ -20,7 +20,8 @@ namespace Dreamlines.Data {
                 join ship in Context.Ships on unit.Id equals ship.SalesUnitId
                 join booking in Context.Bookings on ship.Id equals booking.ShipId
                 where booking.BookingDate >= query.FromDate && 
-                      booking.BookingDate <= query.ToDate
+                      booking.BookingDate <= query.ToDate &&
+                      (!query.SalesUnitId.HasValue || unit.Id == query.SalesUnitId)
                 group booking by new {
                     unit.Id, 
                     SalesUnitName = unit.Name, 

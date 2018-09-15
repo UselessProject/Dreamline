@@ -32,11 +32,11 @@ export class SalesUnitReportComponent implements OnInit {
     // data grid properties
     public dataSource$ = new Subject<SalesUnitRecord[]>();
     public gridColumns: Column[] = [
-        {name: 'id', header: '#', className: 'd-none d-lg-table-cell text-truncate'},
-        {name: 'unit', header: 'Name', className: 'text-truncate'},
-        {name: 'country', header: 'Country', className: 'd-none d-lg-table-cell text-truncate'},
-        {name: 'quantity', header: 'Quantity', className: 'd-none d-lg-table-cell text-truncate'},
-        {name: 'price', header: 'Price', className: 'text-truncate'}
+        {name: 'id', header: '#', className: 'd-none d-lg-table-cell'},
+        {name: 'unit', header: 'Name'},
+        {name: 'country', header: 'Country', className: 'd-none d-lg-table-cell'},
+        {name: 'quantity', header: 'Quantity', className: 'd-none d-lg-table-cell'},
+        {name: 'price', header: 'Price'}
     ];
 
     constructor(private readonly salesUnitService: SalesUnitService,

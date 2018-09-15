@@ -10,7 +10,6 @@ export interface BookingRecord {
     readonly id: number;
     readonly ship: string;
     readonly price: string;
-    readonly currencySymbol: string;
     readonly date: string;
 }
 
@@ -29,10 +28,10 @@ export class BookingReportComponent implements OnInit {
 
     public dataSource$ = new Subject<BookingRecord[]>();
     public gridColumns: Column[] = [
-        {name: 'id', header: '#', className: 'd-none d-lg-table-cell text-truncate'},
-        {name: 'ship', header: 'Ship', className: 'text-truncate'},
-        {name: 'price', header: 'Price', className: 'd-none d-lg-table-cell text-truncate'},
-        {name: 'date', header: 'Date', className: 'd-none d-lg-table-cell text-truncate'},
+        {name: 'id', header: '#', className: 'd-none d-lg-table-cell'},
+        {name: 'ship', header: 'Ship'},
+        {name: 'price', header: 'Price'},
+        {name: 'date', header: 'Date', className: 'd-none d-lg-table-cell'},
     ];
     
     public fromDate: Date;
@@ -88,8 +87,7 @@ export class BookingReportComponent implements OnInit {
         return {
             id: summary.bookingId,
             ship: summary.shipName,
-            price: formatNumber(summary.price),
-            currencySymbol: summary.currencySymbol,
+            price: `${summary.currencySymbol} ${formatNumber(summary.price)}`,
             date: toUSDateFormat(new Date(summary.bookingDate))
         };
     }

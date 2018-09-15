@@ -12,6 +12,7 @@ namespace Dreamlines.Dtos {
         public DateTime? FromDate { get; set; }
         [Required]
         public DateTime? ToDate { get; set; }
+        public int? SalesUnitId { get; set; }
     }
     
 }

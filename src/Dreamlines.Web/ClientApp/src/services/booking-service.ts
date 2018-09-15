@@ -15,8 +15,8 @@ export interface BookingSummary {
     readonly shipId: string;
     readonly shipName: string;
     readonly price: number;
-    readonly bookingDate: Date;
     readonly currencySymbol: string;
+    readonly bookingDate: Date;
 }
 
 @Injectable()
