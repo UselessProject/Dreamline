@@ -7,6 +7,7 @@ export interface SearchRequest {
     readonly toDate: Date;
     readonly skip: number;
     readonly limit: number;
+    readonly salesUnitId?: number;
 }
 
 export interface SalesUnitSummary {

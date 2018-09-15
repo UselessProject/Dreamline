@@ -3,6 +3,7 @@ import { Subject } from "rxjs";
 import { Column, PaginatedResult } from "../data-grid/data-grid.component";
 import { SalesUnitService, SalesUnitSummary, SearchRequest } from "../../services/sales-unit-service";
 import { Router } from "@angular/router";
+import { formatNumber, toIsoDate } from "../../utils";
 
 export interface SalesUnitRecord {
     readonly id: number;
@@ -60,7 +61,19 @@ export class SalesUnitReportComponent implements OnInit {
             .search(searchRequest)
             .subscribe(this.onDataReceived);
     }
-
+    
+    onRowClick(record: SalesUnitRecord) {
+        this.router.navigate(
+            ["booking", record.id],
+            {
+                queryParams: {
+                    start: toIsoDate(this.fromDate),
+                    end: toIsoDate(this.toDate)
+                }
+            }
+        );
+    }
+    
     private onDataReceived(data: PaginatedResult<SalesUnitSummary>) {
         this.dataSource$.next(
             data.result.map(this.mapSummaryRecords)
@@ -68,31 +81,13 @@ export class SalesUnitReportComponent implements OnInit {
         this.totalResult = data.total;
     }
 
-    onRowClick(record: SalesUnitRecord) {
-        this.router.navigate(
-            ["booking", record.id],
-            {
-                queryParams: {
-                    start: this.toIsoDate(this.fromDate),
-                    end: this.toIsoDate(this.toDate)
-                }
-            }
-        );
-    }
-
     private mapSummaryRecords = (summary: SalesUnitSummary): SalesUnitRecord => ({
         id: summary.salesUnitId,
         unit: summary.salesUnitName,
         country: summary.countryName,
         quantity: summary.totalBooking,
-        price: `${summary.currencySymbol} ${this.formatCurrency(summary.totalPrice)}`
+        price: `${summary.currencySymbol} ${formatNumber(summary.totalPrice)}`
     });
-
-    private formatCurrency = (value: number) =>
-        value.toFixed(3).replace(this.currencySeparatorRegex, this.currencySeparator);
-
-    private toIsoDate = (date: Date) => 
-        `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 
 }
 

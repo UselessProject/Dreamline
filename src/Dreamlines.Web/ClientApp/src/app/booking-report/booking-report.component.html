@@ -1,3 +1,45 @@
-<p>
-  booking-report works!
-</p>
+<h3>Search from
+    <small class="text-muted">{{fromDate.toDateString() | date: 'MM-dd-yyyy'}}</small>
+    to
+    <small class="text-muted">{{toDate.toDateString() | date: 'MM-dd-yyyy'}}</small>
+</h3>
+<div class="card">
+    <div class="card-header">
+        {{salesUnitName}} Summary
+    </div>
+    <div class="card-body">
+        <ul class="list-group list-group-flush">
+
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col"><b>Country</b></div>
+                    <div class="col">{{countryName}}</div>
+                </div>
+            </li>
+
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col"><b>Total Booking</b></div>
+                    <div class="col">{{totalBooking}}</div>
+                </div>
+            </li>
+
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col"><b>Total Price</b></div>
+                    <div class="col">{{currencySymbol}} {{totalPrice}}</div>
+                </div>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+<div class="card mt-3">
+    <div class="card-header">
+        Booking Details
+    </div>
+    <div class="card-body">
+        <app-data-grid [dataSource]="dataSource$"
+                       [columns]="gridColumns"></app-data-grid>
+    </div>
+</div>

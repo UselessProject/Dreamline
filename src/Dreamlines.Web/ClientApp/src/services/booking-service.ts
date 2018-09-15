@@ -7,6 +7,7 @@ export interface SearchRequest {
     readonly toDate: Date;
     readonly skip: number;
     readonly limit: number;
+    readonly salesUnitId: number;
 }
 
 export interface BookingSummary {
@@ -14,6 +15,7 @@ export interface BookingSummary {
     readonly shipId: string;
     readonly shipName: string;
     readonly price: number;
+    readonly bookingDate: Date;
     readonly currencySymbol: string;
 }
 

@@ -14,6 +14,7 @@ import { SalesUnitReportComponent } from './sales-unit-report/sales-unit-report.
 
 import { AppRoutes } from './app.routes';
 import { BookingReportComponent } from './booking-report/booking-report.component';
+import { BookingService } from "../services/booking-service";
 
 @NgModule({
     declarations: [
@@ -30,7 +31,7 @@ import { BookingReportComponent } from './booking-report/booking-report.componen
         CollapseModule,
         BsDatepickerModule.forRoot()
     ],
-    providers: [SalesUnitService],
+    providers: [SalesUnitService, BookingService],
     bootstrap: [AppComponent]
 })
 export class AppModule {
