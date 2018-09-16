@@ -51,7 +51,7 @@ If you want to publish the API you should connect your app to the production dat
 
 ## Populating Data
 
-Dreamlines will seed the database with common currencies, countries and sales units, but you need extra scripts to populate your database. You can find the dumped data inside the `db` directory in the root of the project.
+Dreamlines will seed the database with common currencies, countries and sales units, but you need extra scripts to populate your database. You can find the dumped scripts inside the `db` directory within the root of your project.
 
 ## SalesUnit Summary API
 
