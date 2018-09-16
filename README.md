@@ -29,7 +29,7 @@ dotnet build
 
 ## Testing
 
-I've written some Unit and Integration tests for this project. You can use your IDE to run them or use following `dotnet` CLI as follows.
+I've written some Unit and Integration tests for this project. You can use your IDE or `dotnet` CLI to run them, here is an example that uses command line.
 
 ```bash
 dotnet test tests/**/*.csproj
