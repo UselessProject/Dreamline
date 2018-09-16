@@ -6,7 +6,7 @@ Dreamlines is a simple reporting microservice was written in C# and TypeScript a
 
 The following figure demonstrates the database schema. Since I am using a Mac, I chose MySql as my main database. The model is simple and self-descriptive.
 
-![Data Model](/Users/mehdigolchin/Projects/Dreamlines/datamodel.png)
+![Data Model](https://raw.githubusercontent.com/MehdiGolchin/dreamlines/master/datamodel.png)
 
 ## Cloning
 
