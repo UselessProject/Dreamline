@@ -103,21 +103,21 @@ curl -X POST \
 
 ## Technologies
 
-MySql (https://www.mysql.com/) . 
+MySql (https://www.mysql.com/)
 
-Asp.net Core (https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-2.1) . 
-Entity Framework Core (https://github.com/aspnet/EntityFrameworkCore) . 
+Asp.net Core (https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-2.1)<br />
+Entity Framework Core (https://github.com/aspnet/EntityFrameworkCore)
 
-xUnit (https://xunit.github.io/) . 
-Moq (https://github.com/moq/moq4) . 
-FluentAssertion	(https://fluentassertions.com/) . 
+xUnit (https://xunit.github.io/)<br />
+Moq (https://github.com/moq/moq4)<br />
+FluentAssertion	(https://fluentassertions.com/)
 
-AngularJs (https://angularjs.org/) . 
-Bootstrap (https://getbootstrap.com/) . 
-SCSS (https://sass-lang.com/) . 
+AngularJs (https://angularjs.org/)<br />
+Bootstrap (https://getbootstrap.com/)<br />
+SCSS (https://sass-lang.com/)
 
-Rider (https://www.jetbrains.com/rider/) . 
-DataGrip (https://www.jetbrains.com/datagrip/) . 
+Rider (https://www.jetbrains.com/rider/)<br />
+DataGrip (https://www.jetbrains.com/datagrip/)
 
 ## Thanks
 
