@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from "rxjs";
 import { Column, PaginatedResult } from "../data-grid/data-grid.component";
-import { SalesUnitService, SalesUnitSummary, SearchRequest } from "../../services/sales-unit-service";
+import { SalesUnitService, SalesUnitSummary, SalesUnitQuery as SearchRequest } from "../../services/sales-unit-service";
 import { Router } from "@angular/router";
 import { formatNumber, toIsoDate } from "../../utils";
 

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { PaginatedResult } from "../app/data-grid/data-grid.component";
 
-export interface SearchRequest {
+export interface SalesUnitQuery {
     readonly fromDate: string;
     readonly toDate: string;
     readonly skip: number;
@@ -24,7 +24,7 @@ export class SalesUnitService {
     
     constructor(readonly http: HttpClient) {}
     
-    search(request: SearchRequest) {
+    search(request: SalesUnitQuery) {
         return this.http.post<PaginatedResult<SalesUnitSummary>>(
             "/api/salesunit/search", request);
     }
