@@ -118,11 +118,16 @@ namespace Dreamlines.Web.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnName("name");
+                        .HasColumnName("name")
+                        .HasMaxLength(100);
 
                     b.HasKey("Id");
 
                     b.HasIndex("CountryId");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasName("ix_sales_unit_name");
 
                     b.ToTable("sales_unit");
 

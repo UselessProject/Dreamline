@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Dreamlines.Web.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class CreateDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,7 +49,7 @@ namespace Dreamlines.Web.Migrations
                     sales_unit_id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     country_id = table.Column<int>(nullable: false),
-                    name = table.Column<string>(nullable: false)
+                    name = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -170,6 +170,12 @@ namespace Dreamlines.Web.Migrations
                 name: "IX_sales_unit_country_id",
                 table: "sales_unit",
                 column: "country_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_sales_unit_name",
+                table: "sales_unit",
+                column: "name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "ix_sales_unit_id",

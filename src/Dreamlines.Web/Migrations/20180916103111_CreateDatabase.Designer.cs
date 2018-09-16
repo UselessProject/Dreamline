@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dreamlines.Web.Migrations
 {
     [DbContext(typeof(DreamlinesContext))]
-    [Migration("20180908182957_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20180916103111_CreateDatabase")]
+    partial class CreateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -120,11 +120,16 @@ namespace Dreamlines.Web.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnName("name");
+                        .HasColumnName("name")
+                        .HasMaxLength(100);
 
                     b.HasKey("Id");
 
                     b.HasIndex("CountryId");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasName("ix_sales_unit_name");
 
                     b.ToTable("sales_unit");
 
