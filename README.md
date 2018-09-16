@@ -20,7 +20,7 @@ git clone https://github.com/MehdiGolchin/dreamlines.git
 
 Before building Dreamlines, you need to have DotNet Core installed on your computer. If you haven't, don't worry, please check [.net core download page](https://www.microsoft.com/net/download).
 
-If you are using Visual Studio 2017 or Jetbrain Rider, you can open the solution and build the project without an extra headache. However, if you are a bash guy and you like using bash, here is an example.
+If you are using Visual Studio 2017 or Jetbrain Rider, you can open the solution and build the project without extra headache. However, if you are a bash nerd here is an example.
 
 ```bash
 cd dreamlines
