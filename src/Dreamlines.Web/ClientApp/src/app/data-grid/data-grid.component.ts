@@ -23,7 +23,7 @@ export interface Column {
 export class DataGridComponent{
 
     @Input() columns: Column[];
-    @Input() dataSource: Observable<PaginatedResult>;
+    @Input() dataSource: Observable<any>;
     @Output() rowClick: EventEmitter<any> = new EventEmitter();
     
     onRowClick(record: any) {
