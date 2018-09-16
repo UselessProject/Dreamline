@@ -6,7 +6,7 @@ Dreamlines is a simple reporting microservice was written in C# and TypeScript a
 
 The following figure demonstrates the database schema. Since I am using a Mac, I chose MySql as my main database. The model is simple and self-descriptive.
 
-![Data Model](/Users/mehdigolchin/Projects/Dreamlines/datamodel.png)
+![Data Model](https://raw.githubusercontent.com/MehdiGolchin/dreamlines/master/datamodel.png)
 
 ## Cloning
 
@@ -20,7 +20,7 @@ git clone https://github.com/MehdiGolchin/dreamlines.git
 
 Before building Dreamlines, you need to have DotNet Core installed on your computer. If you haven't, don't worry, please check [.net core download page](https://www.microsoft.com/net/download).
 
-If you are using Visual Studio 2017 or Jetbrain Rider, you can open the solution and build the project without an extra headache. However, if you are a bash guy and you like using bash, here is an example.
+If you are using Visual Studio 2017 or Jetbrain Rider, you can open the solution and build the project without extra headache. However, if you are a bash nerd here is an example.
 
 ```bash
 cd dreamlines
@@ -29,7 +29,7 @@ dotnet build
 
 ## Testing
 
-I've written some Unit and Integration tests to show for this project. You can use your IDE to run them or use following `dotnet` CLI as follows.
+I've written some Unit and Integration tests for this project. You can use your IDE or `dotnet` CLI to run them, here is an example that uses command line.
 
 ```bash
 dotnet test tests/**/*.csproj
@@ -51,7 +51,7 @@ If you want to publish the API you should connect your app to the production dat
 
 ## Populating Data
 
-Dreamlines will seed the database with common currencies, countries and sales units, but you need extra scripts to populate your database. You can find the dumped data inside the `db` directory in the root of the project.
+Dreamlines will seed the database with common currencies, countries and sales units, but you need extra scripts to populate your database. You can find the dumped scripts inside the `db` directory within the root of your project.
 
 ## SalesUnit Summary API
 
@@ -103,21 +103,21 @@ curl -X POST \
 
 ## Technologies
 
-MySql	(https://www.mysql.com/)
+MySql (https://www.mysql.com/)
 
-Asp.net Core	(https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-2.1)
-Entity Framework Core	(https://github.com/aspnet/EntityFrameworkCore)
+Asp.net Core (https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-2.1)<br />
+Entity Framework Core (https://github.com/aspnet/EntityFrameworkCore)
 
-xUnit	(https://xunit.github.io/)
-Moq		(https://github.com/moq/moq4)
+xUnit (https://xunit.github.io/)<br />
+Moq (https://github.com/moq/moq4)<br />
 FluentAssertion	(https://fluentassertions.com/)
 
-AngularJs	(https://angularjs.org/)
-Bootstrap	(https://getbootstrap.com/)
-SCSS	(https://sass-lang.com/)
+AngularJs (https://angularjs.org/)<br />
+Bootstrap (https://getbootstrap.com/)<br />
+SCSS (https://sass-lang.com/)
 
-Rider	(https://www.jetbrains.com/rider/)
-DataGrip		(https://www.jetbrains.com/datagrip/)
+Rider (https://www.jetbrains.com/rider/)<br />
+DataGrip (https://www.jetbrains.com/datagrip/)
 
 ## Thanks
 
